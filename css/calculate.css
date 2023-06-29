@@ -283,4 +283,6 @@ input::-webkit-inner-spin-button {
 
 .cursor:hover{
   cursor: pointer;
+  text-decoration: underline;
+  text-decoration-color: red;
 }
