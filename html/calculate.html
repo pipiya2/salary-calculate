@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>지출</title>
+        <!-- Tailwind CDN -->
+        <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+        <!-- font -->
+        <!-- <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Orbit&display=swap" rel="stylesheet"> -->
+
+        <!-- <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Jua&family=Orbit&display=swap" rel="stylesheet"> -->
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300;400;500;600&display=swap" rel="stylesheet">
+        <link href="../css/calculate.css" rel = "stylesheet">
+    </head>
+    <body>
+        <div class="wrapper">
+            <div class="main_title">
+                <h1>급여 :</h1>
+                <input type="number" id="salary">
+                <div onclick="moveToItemInput()" id="btn-confirm" data-btnType = "set">설정</div>
+            </div>
+            <div class="wrap_text">
+                <div class="item_list_area">
+                    <textarea id="itemInput" disabled="disabled" placeholder="ex) 1000 아이스크림 (입력후 엔터)"></textarea>
+                    <span style = "color : red;font-size: small;">** 금액과 내역 사이에 공백 1개 이상 있어야함 **</span>
+                </div>
+
+                <div id="items"></div>
+
+                <h2 class="text">총 지출액 : <span id="total"></span></h2>
+
+                <h2 class="text">잔여 금액 : <span id="leftMoney"></span></h2>
+                
+                <div class = "save-btn">저장</div>
+            </div>
+            
+            <ul class = "saved-list-wrap">
+                <h3>저장된 리스트</h3>
+            </ul>
+        </div>
+
+        
+    
+    </body>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src = "https://rawgit.com/jackmoore/autosize/master/dist/autosize.min.js"></script>
+    <script src = "../js/calculate.js"></script>
+</html>
