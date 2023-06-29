@@ -1,0 +1,286 @@
+body {
+  /* font-family: "Orbit", sans-serif; */
+
+  /* font-family: "Jua", sans-serif; */
+
+  font-family: 'IBM Plex Sans KR', sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.wrapper {
+  background-color: #FFF3E2;
+  height: 100%;
+  border: 1px solid #FFE5CA;
+  border-radius: 5px;
+  padding: 1rem;
+  max-width: 700px;
+  min-width: 670px;
+  margin: 0 auto;
+  margin-top: 3vh;
+  margin-bottom : 3vh;
+  box-sizing: border-box;
+}
+
+textarea {
+  width: 100%;
+  resize: none;
+  height: 30px;
+  overflow-y: hidden;
+  font-size: 30px;
+}
+
+.main_title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+  padding: 0 30px;
+
+}
+
+.main_title > div {
+  font-size: 1rem;
+  font-weight: 600;
+  background-color: #E74646;
+  cursor: pointer;
+  border-radius: 5px;
+  text-align: center;
+  line-height: 50px;
+  width: 65px;
+  height: 50px;
+}
+
+#salary {
+  border: 1px solid #FFE5CA;
+  border-radius: 5px;
+  font-size: 30px;
+  height: 50px;
+  padding: 0 20px;
+}
+
+#salary:focus {
+  outline: 1px solid #fff;
+  box-shadow: 0px 0px 10px #eee;
+  border: 1px solid transparent;
+}
+
+textarea::placeholder {
+  color: gray;
+  font-size: 1.5rem;
+  padding: 0 20px;
+  line-height: 52px;
+  font-family: 'IBM Plex Sans KR', sans-serif;
+}
+
+textarea {
+  font-size: 1.5rem;
+  /* padding: 0 20px; */
+  line-height: 52px;
+  width: 100%;
+  font-family: 'IBM Plex Sans KR', sans-serif;
+}
+
+.cancelBtn {
+  margin-right: 15px;
+  color: red;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.itemWrap {
+  display: flex;
+}
+
+#items {
+  font-size: 20px;
+  margin-top : 20px;
+}
+
+#itemInput {
+  height: 50px;
+  padding: 0 30px;
+  box-sizing: border-box;
+
+}
+
+.item_list_area {
+  width: 100%;
+}
+
+.text {
+  font-size: 1.5rem;
+  margin: 5px 0px;
+}
+
+.wrap_text {
+  padding: 0 30px;
+  box-sizing: border-box;
+}
+
+@media (max-width:450px) {
+  .wrapper {
+    background-color: #FFF3E2;
+    height: 100%;
+    border: 1px solid #FFE5CA;
+    border-radius: 5px;
+    padding: 1rem;
+    max-width: 400px;
+    min-width: 400px;
+    margin: 0 auto;
+    margin-top: 3vh;
+    margin-bottom: 3vh;
+    box-sizing: border-box;
+
+  }
+
+  textarea {
+    width: 100%;
+    resize: none;
+    height: 30px;
+    overflow-y: hidden;
+    font-size: 30px;
+  }
+
+  .main_title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    padding: 0 30px;
+
+  }
+
+  .main_title h1 {
+    font-size: 1rem;
+    width: 72px;
+  }
+
+  .main_title>div {
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: -1px;
+    background-color: #E74646;
+    cursor: pointer;
+    border-radius: 5px;
+    text-align: center;
+    line-height: 50px;
+    width: 90px;
+    height: 50px;
+  }
+
+  #salary {
+    border: 1px solid #FFE5CA;
+    border-radius: 5px;
+    font-size: 18px;
+    height: 50px;
+    width: 100%;
+    padding: 0 20px;
+    margin: 10px;
+  }
+
+  #salary:focus {
+    outline: 1px solid #fff;
+    box-shadow: 0px 0px 10px #eee;
+    border: 1px solid transparent;
+  }
+
+  textarea::placeholder {
+    color: gray;
+    font-size: 18px;
+    padding: 0 20px;
+    line-height: 52px;
+    font-family: 'IBM Plex Sans KR', sans-serif;
+  }
+
+  textarea {
+    font-size: 18px;
+    padding: 0 20px;
+    line-height: 52px;
+    width: 100%;
+    font-family: 'IBM Plex Sans KR', sans-serif;
+  }
+
+  .cancelBtn {
+    margin-left: 30px;
+    color: red;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .itemWrap {
+    display: flex;
+  }
+
+  #items {
+    font-size: 20px;
+  }
+
+  #itemInput {
+    height: 50px;
+    /* padding: 0 30px; */
+    box-sizing: border-box;
+
+  }
+
+  .item_list_area {
+    width: 100%;
+  }
+
+  .text {
+    font-size: 1rem;
+    margin: 5px 0px;
+  }
+
+  .wrap_text {
+    padding: 0 30px;
+    box-sizing: border-box;
+  }
+
+  #items {
+    font-size: 15px;
+  }
+}
+
+
+/*input 박스에 type을 number로 주면 우측 끝에 상하 버튼이 생김 그거 없애는 css*/
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+
+.save-wrap{
+  
+}
+
+
+.save-btn{
+  display: inline;
+  padding: 11px;
+  background-color: #E74646;
+  font-family: 'IBM Plex Sans KR', sans-serif;
+
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 5px;
+  text-align: center;
+  line-height: 50px;
+  width: 65px;
+  height: 50px;
+}
+
+.saved-list-wrap{
+  margin-top : 20px;
+  margin-left : 30px;
+}
+
+.cursor:hover{
+  cursor: pointer;
+}
