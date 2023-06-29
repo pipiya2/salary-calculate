@@ -154,8 +154,10 @@ $(document).on('click', '.cancelBtn', event => {
 
 //#region 저장된 리스트 삭제
 function deleteSavedList(key){
-    localStorage.removeItem(key);
-    $('.'+key)[0].remove();
+    if(confirm("삭제하시겠습니까?")){
+        localStorage.removeItem(key);
+        $('.'+key)[0].remove();
+    }
 }
 //#endregion
 
