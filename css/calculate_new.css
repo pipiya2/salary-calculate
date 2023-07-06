@@ -1,6 +1,10 @@
 body {
     margin : 0;
+    font-family: 'IBM Plex Sans KR', sans-serif;
+    font-family: 'Nanum Gothic', sans-serif;
+    font-family: 'Noto Sans KR', sans-serif;
 }
+
 
 /* pc */
 .wrapper{
@@ -17,7 +21,8 @@ body {
     /* background-color: red; */
     width : 30%;
     height : 100%;
-    border-right : 1px  solid gray;
+    border-right : 1.6px  solid #dfdfdf;
+    overflow-x: hidden;
 }
 
 .scroll{
@@ -30,27 +35,76 @@ body {
     height : 100%;
 }
 
+/* header */
 .left-area-header{
     /* margin-top : 50px; */
     text-align: center;
     margin : 20px 0px 25px 0px;
-    font-size: large;
-    font-weight: 700;
+    font-size: x-large;
+    font-weight: 1000;
+}
+
+.right-area-header{
+    padding : 25px 25px 0px 25px;
+    display : flex;
 }
 
 .list{
-    /* border-bottom: 1px solid black; */
-    /* border-top: 1px solid black;  */
-    min-height : 60px;
+    padding : 15px 30px 15px 30px;
     margin-bottom: 3px;
-    border-bottom: 1px solid black;
-    border-top: 1px solid black;
+    border-bottom: 1px solid #dfdfdf;
+    transition: 0.3s;
+    opacity: 0.8;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width : 100%;
 }
 
+input{
+    border : none;
+}
 
-.list:hover{
+.list-area > .list:first-child{
+    border-top: 1px solid #dfdfdf;
+}
+
+.list.saved:hover{
     cursor : pointer;
+    font-size: large;
+    opacity: 1;
 }
+
+.add-btn{
+    transition : 0.2s;
+    opacity: 0.8;
+}
+
+.add-btn:hover{
+    color : rgb(141, 243, 141);
+    cursor : pointer;
+    width : 20px;
+    height :20px;
+}
+
+.trash-btn{
+    color : rgb(170, 165, 165);
+}
+
+.trash-btn.active{
+    color : black;
+}
+
+.trash-btn.active:hover{
+    cursor : pointer;
+    color : red;
+}
+
+.trash-btn-area{
+    display : flex;
+    justify-content: right;
+    padding : 0px 10px 0px 0px;
+}
+
 
 
 /**===================스크롤바 설정=========================*/

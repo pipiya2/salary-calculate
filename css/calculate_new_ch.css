@@ -1,0 +1,97 @@
+* {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+body {
+    font-family: 'IBM Plex Sans KR', sans-serif;
+    font-family: 'Nanum Gothic', sans-serif;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+.header {
+    display: flex;
+    font-size: 1.3rem;
+    border-bottom:1px solid black;
+}
+
+.header li {
+    width: 40%;
+    padding:20px;
+}
+.header li:first-of-type {
+    width: 25%;
+    padding:20px;
+}
+
+.square {
+    width: 80vw;
+    height: 600px;
+    margin: 50px auto 0 auto;
+    border-radius: 20px;
+    box-shadow: 0px 0px 25px #dfdfdf;
+    background-color: rgb(255, 255, 255);
+    position: relative;
+}
+
+.item{
+    border-bottom: 1px solid black;
+    height: 30px;
+    padding:20px;
+    width: 100%;
+    transition: 0.3s;
+    opacity: 0.8;
+}
+
+.item:last-of-type{
+    border-bottom: none;
+}
+
+.item:hover{
+    font-size: large;
+    cursor: pointer;
+    opacity: 1;
+}
+
+.left-wrapper{
+    overflow-y: scroll;
+    overflow-x: hidden;
+    width: 25%;
+    height: calc(600px - 70px);
+    border-bottom-left-radius: 20px;
+}
+/*===================스크롤바 설정=========================*/
+.left-wrapper::-webkit-scrollbar {
+    width: 3px;
+}
+
+/* 스크롤바 막대 설정*/
+.left-wrapper::-webkit-scrollbar-thumb {
+    background-color: gray;
+    /* 스크롤바 둥글게 설정    */
+    border-radius: 10px;
+    height: 30%;
+}
+
+/* 스크롤바 뒷 배경 설정*/
+.left-wrapper::-webkit-scrollbar-track {
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.right-wrapper::-webkit-scrollbar {
+    width: 3px;
+}
+
+/* 스크롤바 막대 설정*/
+.right-wrapper::-webkit-scrollbar-thumb {
+    background-color: gray;
+    /* 스크롤바 둥글게 설정    */
+    border-radius: 10px;
+    height: 30%;
+}
+
+/* 스크롤바 뒷 배경 설정*/
+.right-wrapper::-webkit-scrollbar-track {
+    background-color: rgba(0, 0, 0, 0);
+}
