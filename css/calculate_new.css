@@ -27,6 +27,7 @@ body {
 
 .scroll{
     overflow-y:scroll;
+    overflow-x: hidden;
 }
 
 .right-wrapper{
@@ -47,6 +48,7 @@ body {
 .right-area-header{
     padding : 25px 25px 0px 25px;
     display : flex;
+    justify-content: space-between;
 }
 
 .list{
@@ -75,7 +77,6 @@ input{
 }
 
 .add-btn{
-    transition : 0.2s;
     opacity: 0.8;
 }
 
@@ -84,6 +85,26 @@ input{
     cursor : pointer;
     width : 20px;
     height :20px;
+}
+
+.add-btn.disabled{
+    color : rgb(170, 165, 165);
+}
+
+.save-btn:hover{
+    cursor : pointer;
+}
+
+.save-btn.disabled{
+    color : rgb(170, 165, 165);
+}
+
+.save-btn.disabled:hover{
+    cursor : default;
+}
+
+.add-btn.disabled:hover{
+    cursor : default;
 }
 
 .trash-btn{
@@ -104,6 +125,128 @@ input{
     justify-content: right;
     padding : 0px 10px 0px 0px;
 }
+
+.right-write-wrap{
+    width : 100%;
+}
+
+input:focus{
+    outline: none;
+}
+
+.right-write-content{
+    width : 80%;
+    margin:15px auto;
+    border:1px solid #dfdfdf;
+    border-radius: 15px;
+}
+
+.right-write-header{
+    display : flex;
+    background-color: #42444e;
+    color : white;
+    height: 54px;
+    align-items: center;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+.right-write-header > div{
+    width : 50%;text-align: center;
+}
+
+.write-list-area{
+    display : flex;
+    height: 54px;
+    border-bottom:1px solid #dfdfdf;
+}
+
+.write-list-area:last-child{
+    border : none;
+}
+
+.write-list-area > div{
+    width : 50%;
+    text-align: center;
+    display : flex;
+    align-items: center;
+}
+
+.write-list-area > div > input {
+    width : 90%;
+    height : 80%;
+    margin:0 auto;
+    font-size: medium;
+}
+
+.memo-area{
+    width : 50%;
+    text-align: center;
+    display : flex;
+    align-items: center;
+}
+
+.border-right{
+    border-right:1px solid #dfdfdf;
+}
+.border-left{
+    border-left:1px solid #dfdfdf;
+}
+.border-top{
+    border-top:1px solid #dfdfdf;
+}
+.border-bottom{
+    border-bottom:1px solid #dfdfdf;
+}
+
+.number-area{
+    width : 50%;
+    text-align: center;
+    display : flex;
+    align-items: center;
+}
+/* td ,th{
+    border-bottom: 1px solid #dfdfdf;
+    padding: 1em .5em;
+    vertical-align: middle;
+}
+
+th{
+    width : 50%;
+    background: #42444e;
+    color : white;
+}
+
+td{
+    border-right: 1px solid #dfdfdf;
+    border-bottom:1px solid #dfdfdf;
+    text-align: right;
+    height : 23px;
+}
+
+td:first-child {
+    border-left: 1px solid #c6c9cc;
+}
+
+table {
+    width : 90%;
+    margin : 25px auto 25px auto;
+}
+
+tr:first-child th:first-child {
+    border-top-left-radius: 6px;
+}
+
+tr:first-child th:last-child {
+    border-top-right-radius: 6px;
+}
+
+tr:last-child td:first-child {
+    border-bottom-left-radius: 6px;
+}
+tr:last-child td:last-child {
+    border-bottom-right-radius: 6px;
+} */
 
 
 
