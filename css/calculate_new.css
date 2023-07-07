@@ -205,6 +205,11 @@ input:focus{
     display : flex;
     align-items: center;
 }
+
+.list.saved.selected{
+    font-size: large;
+    background-color: #dfdfdf85;
+}
 /* td ,th{
     border-bottom: 1px solid #dfdfdf;
     padding: 1em .5em;
