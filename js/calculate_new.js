@@ -102,12 +102,24 @@ $(document).on('click','.save-btn',(e)=>{
 // })
 
 $(document).on('keyup','.change-flag',(e)=>{
-    // 저장 or 삭제
     saveOrDel();
     //입력시 다음줄 추가
     addNextRow(e);
-    //금액적는란 숫자만, 천단위 표시
 })
+
+// function inputNumberFormat(obj) {
+//     obj.value = comma(uncomma(obj.value));
+// }
+
+// function uncomma(str) {
+//     str = String(str);
+//     return str.replace(/[^\d]+/g, '');
+// }
+
+// function comma(str) {
+//     str = String(str);
+//     return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+// }
 
 //#region 저장,삭제
 function saveOrDel(){
@@ -133,9 +145,6 @@ function addNextRow(e){
     if(e.target.value != ""){
         let curRow = $(e.target).parent().parent()[0];
 
-        console.log(curRow);
-    
-        console.log(curRow.nextElementSibling);
         if(curRow.nextElementSibling == null){
             $('.right-write-content').append(getListFrame('',''));
         }
@@ -230,7 +239,8 @@ function loadAllList(){
 
 //#region 새로운 항목 생성될 때
 function createNewFrame(){
-    $('.right-write-wrap').append(dafaultFrame);
+    $('.right-write-wrap').append(header);
+    $('.right-write-content').append(getListFrame('',''));
 }
 //#endregion
 

@@ -5,12 +5,11 @@ body,* {
     font-family: 'Noto Sans KR', sans-serif;
 }
 
-/* input{
-    font-family: 'IBM Plex Sans KR', sans-serif;
-    font-family: 'Nanum Gothic', sans-serif;
-    font-family: 'Noto Sans KR', sans-serif;
-} */
-
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 
 /* pc */
 .wrapper{
