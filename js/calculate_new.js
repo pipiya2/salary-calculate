@@ -102,6 +102,15 @@ $(document).on('click','.save-btn',(e)=>{
 // })
 
 $(document).on('keyup','.change-flag',(e)=>{
+    // 저장 or 삭제
+    saveOrDel();
+    //입력시 다음줄 추가
+    addNextRow(e);
+    //금액적는란 숫자만, 천단위 표시
+})
+
+//#region 저장,삭제
+function saveOrDel(){
     let writtenStr = "";
     let id = $('.selected')[0].id;
 
@@ -116,7 +125,24 @@ $(document).on('keyup','.change-flag',(e)=>{
         activeAddBtn();
         save(id);
     }
-})
+}
+
+
+//#region 입력시 다음줄 추가
+function addNextRow(e){
+    if(e.target.value != ""){
+        let curRow = $(e.target).parent().parent()[0];
+
+        console.log(curRow);
+    
+        console.log(curRow.nextElementSibling);
+        if(curRow.nextElementSibling == null){
+            $('.right-write-content').append(getListFrame('',''));
+        }
+    }
+}
+//#endregion
+
 
 function listConfirm(id){
     let listName = $('#'+id).val() == "" ? "새로운 항목" : $('#'+id).val();
@@ -129,7 +155,7 @@ function addList(){
 
     let div = document.createElement('div');
     // input.setAttribute('type','text');
-    div.setAttribute('class','list saved selected');
+    div.setAttribute('class','list saved');
     let id = getNextId(); // 새로운 아이디 채번
     div.setAttribute('id',id);
     $(div).html('새로운 항목');
@@ -137,6 +163,7 @@ function addList(){
     // $(input).focus();
     // $(input).select();
     showRightSection(id);
+    $('#'+id).click();
 }
 //#endregion
 
@@ -162,10 +189,16 @@ function loadList(obj){
     $('.right-write-wrap').append(header);
 
     for(let i = 0; i<obj.data.length; i+=2){
-        let listFrame = getListFrame(obj.data[0],obj.data[1]);
-        console.log(listFrame);
+        let memo = obj.data[i];
+        let number = obj.data[i+1];
+        if(memo == "" && number == ""){
+            continue;
+        }
+        let listFrame = getListFrame(obj.data[i],obj.data[i+1]);
         $('.right-write-content').append(listFrame);
     }
+
+    $('.right-write-content').append(getListFrame('','')); // 불러올 때 마지막에 입력행 추가시켜 놓기
 }
 //#endregion
 
@@ -173,7 +206,7 @@ function hideRightSection(){
     $('.right-write-content').remove();
 }
 
-//#region 페이지 로드시
+//#region 화면 로드시
 $(document).ready(()=>{
     loadAllList();
 
@@ -197,22 +230,35 @@ function loadAllList(){
 
 //#region 새로운 항목 생성될 때
 function createNewFrame(){
-    $('.right-wrapper').append(dafaultFrame);
+    $('.right-write-wrap').append(dafaultFrame);
 }
 //#endregion
 
+function deleteList(id){
+    $('#'+id).remove();
+}
+
+let prevId = -1;
+
 //#region 항목 클릭시
 $(document).on('click','.saved',e=>{
+    let curId = e.target.id;
+
+    // 이전에 클릭되어 있는 항목 있는지 체크
+    if(prevId != -1 && prevId != curId){
+        if(localStorage.getItem(prevId) == undefined || localStorage.getItem(prevId) == null){
+            deleteList(prevId);
+            activeAddBtn();
+        }
+    }
+
     if($(e.target).hasClass('selected')){
         return;
     }
 
-    // 입력(저장)안하고 딴 항목 클릭시 항목 지워버리는거...와 이 기준은 진짜 어떻게 정하지?
-    /// 로컬스토리지에서 항목이 삭제될 때 노리면됨.
-
-
     focusNewList(e);
     showRightSection(e.target.id);
+    prevId = curId;
 })
 //#endregion
 

@@ -1,9 +1,15 @@
-body {
+body,* {
     margin : 0;
     font-family: 'IBM Plex Sans KR', sans-serif;
     font-family: 'Nanum Gothic', sans-serif;
     font-family: 'Noto Sans KR', sans-serif;
 }
+
+/* input{
+    font-family: 'IBM Plex Sans KR', sans-serif;
+    font-family: 'Nanum Gothic', sans-serif;
+    font-family: 'Noto Sans KR', sans-serif;
+} */
 
 
 /* pc */
@@ -72,8 +78,8 @@ input{
 
 .list.saved:hover{
     cursor : pointer;
-    font-size: large;
-    opacity: 1;
+    /* font-size: large;
+    opacity: 1; */
 }
 
 .add-btn{
@@ -207,7 +213,7 @@ input:focus{
 }
 
 .list.saved.selected{
-    font-size: large;
+    /* font-size: large; */
     background-color: #dfdfdf85;
 }
 /* td ,th{
