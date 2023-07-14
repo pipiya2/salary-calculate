@@ -78,12 +78,6 @@ $(".add-btn").click((e)=>{
 })
 //#endregion
 
-$(document).on('blur','.writing',(e)=>{
-    // let id = $(e.target)[0].id;
-    // listConfirm(id);
-    // save(id);
-})
-
 $(document).on('click','.save-btn',(e)=>{
     // 저장버튼이 비활성화가 아니면
     if(!$('.save-btn').hasClass('disabled')){
@@ -101,7 +95,44 @@ $(document).on('click','.save-btn',(e)=>{
 //     }
 // })
 
+function addComma(val){
+    let returnData;
+    val = Number(val.replaceAll(',', ''));
+    if(isNaN(val)) {         //NaN인지 판별
+        returnData = 0;
+    }else {                   //NaN이 아닌 경우
+        const formatValue = val.toLocaleString('ko-KR');
+        returnData = formatValue;
+    }
+
+    return returnData;
+}
+
+
+let total = 0;
+let showTotal = "";
+
+$(document).on('blur','.list-number',e=>{
+    let lists = $('.list-number');
+    for(let i = 0; i<lists.length - 1; i++){
+        let val = $(lists[i]).val();
+
+        val = Number(val.replaceAll(',', ''));
+
+        total += val;
+    }
+    showTotal = total.toLocaleString('ko-KR');
+    console.log(total);
+    console.log(showTotal);
+})
+
 $(document).on('keyup','.change-flag',(e)=>{
+    // 현재 입력하고 있는 란이 금액 적는 란이면
+    if($(e.target).hasClass('list-number') && e.target.value != ""){
+        e.target.value = addComma(e.target.value);
+    }
+    
+    // 키 입력할 때마다 저장 혹은 삭제
     saveOrDel();
     //입력시 다음줄 추가
     addNextRow(e);
