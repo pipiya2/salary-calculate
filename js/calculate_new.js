@@ -281,8 +281,10 @@ function clickTop(){
 function loadAllList(){
     let keys = Object.keys(localStorage);
     keys.forEach(e=>{
-        let obj = JSON.parse(localStorage.getItem(e));
-        $('#list-area').append(`<div class = "list saved" id = ${e}>${obj.name}</div>`);
+        if(!e.length > 3){
+            let obj = JSON.parse(localStorage.getItem(e));
+            $('#list-area').append(`<div class = "list saved" id = ${e}>${obj.name}</div>`);
+        }
     })
 }
 //#endregion
