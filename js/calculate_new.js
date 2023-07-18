@@ -281,7 +281,9 @@ function clickTop(){
 function loadAllList(){
     let keys = Object.keys(localStorage);
     keys.forEach(e=>{
-        if(!e.length > 3){
+        console.log(e.length);
+        console.log(e);
+        if(!(e.length > 3)){
             let obj = JSON.parse(localStorage.getItem(e));
             $('#list-area').append(`<div class = "list saved" id = ${e}>${obj.name}</div>`);
         }
