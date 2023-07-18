@@ -73,7 +73,6 @@ $(".add-btn").click((e)=>{
     if(!$(target).hasClass('disabled')){
         disabledAddBtn(); // 추가버튼을 바로 비활성화 시켜줌.
         addList();
-        activeSaveBtn(); // 저장버튼을 활성화 시켜줌.
     }
 })
 //#endregion
@@ -88,14 +87,8 @@ $(document).on('click','.save-btn',(e)=>{
     // save(id);
 })
 
-// $(document).on('keyup','.writing',(e)=>{
-//     if(e.keyCode == '13'){
-//         let id = $(e.target)[0].id;
-//         listConfirmAndSave(id);
-//     }
-// })
-
 function addComma(val){
+    val = val.toString();
     let returnData;
     val = Number(val.replaceAll(',', ''));
     if(isNaN(val)) {         //NaN인지 판별
@@ -122,14 +115,23 @@ $(document).on('blur','.list-number',e=>{
         total += val;
     }
     showTotal = total.toLocaleString('ko-KR');
-    console.log(total);
-    console.log(showTotal);
 })
 
 $(document).on('keyup','.change-flag',(e)=>{
     // 현재 입력하고 있는 란이 금액 적는 란이면
-    if($(e.target).hasClass('list-number') && e.target.value != ""){
-        e.target.value = addComma(e.target.value);
+    if($(e.target).hasClass('list-number') /*&& e.target.value != ""*/){
+
+        if(e.target.value != ""){
+            e.target.value = addComma(e.target.value);
+        }
+
+        let total = 0;
+        for(let i = 0; i<$('.list-number').length; i++){
+            let num = Number(unComma($('.list-number')[i].value));
+            total += num;
+        }
+        // console.log(total);
+        $('#total').html(addComma(total));
     }
     
     // 키 입력할 때마다 저장 혹은 삭제
@@ -138,19 +140,10 @@ $(document).on('keyup','.change-flag',(e)=>{
     addNextRow(e);
 })
 
-// function inputNumberFormat(obj) {
-//     obj.value = comma(uncomma(obj.value));
-// }
-
-// function uncomma(str) {
-//     str = String(str);
-//     return str.replace(/[^\d]+/g, '');
-// }
-
-// function comma(str) {
-//     str = String(str);
-//     return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
-// }
+function unComma(str) {
+    str = String(str);
+    return str.replace(/[^\d]+/g, '');
+}
 
 //#region 저장,삭제
 function saveOrDel(){
@@ -176,8 +169,10 @@ function addNextRow(e){
     if(e.target.value != ""){
         let curRow = $(e.target).parent().parent()[0];
 
-        if(curRow.nextElementSibling == null){
-            $('.right-write-content').append(getListFrame('',''));
+        if($(curRow.nextElementSibling).hasClass("total")){
+
+            let targetElement = $(e.target).parent().parent();
+            $(targetElement).after(getListFrame('',''));
         }
     }
 }
@@ -191,7 +186,7 @@ function listConfirm(id){
 
 //#region 항목추가
 function addList(){
-    $('.saved').removeClass('selected');
+    $('.saved').removeClass('selected'); // 클릭되어있는 항목을 블러처리함.
 
     let div = document.createElement('div');
     // input.setAttribute('type','text');
@@ -200,9 +195,7 @@ function addList(){
     div.setAttribute('id',id);
     $(div).html('새로운 항목');
     $("#list-area").append(div);
-    // $(input).focus();
-    // $(input).select();
-    showRightSection(id);
+    
     $('#'+id).click();
 }
 //#endregion
@@ -210,7 +203,7 @@ function addList(){
 //#region 내역 금액 적는란 활성화
 function showRightSection(id){
     let obj = JSON.parse(localStorage.getItem(id));
-
+    let isNew = false;
     if(obj){
         //있으면 저장된 거 불러오기
         loadList(obj);
@@ -218,9 +211,30 @@ function showRightSection(id){
         //없으면 새로 추가하는 것으로 판단
         hideRightSection();
         createNewFrame();
+        isNew = true;
     }
+
+    // 저장된 거 불러오든 새로 추가하든간에 맨 아래에 총합 행은 추가 해줘야함.
+    addLastRow(obj,isNew);
 }
 //#endregion
+
+function addLastRow(obj,isNew){
+    let total = 0;
+    if(!isNew){
+        for(let i = 0 ; i < obj.data.length; i+=2){
+            total += Number(unComma(obj.data[i+1]));
+        }
+    }
+
+    let a = `
+    <div class = "write-list-area total">
+        <div class = "total">
+            TOTAL :&nbsp;<span id = "total">${addComma(total)}<span>
+        </div>
+    </div>`;
+    $('.right-write-content').append(a);
+}
 
 //#region 클릭 시 저장 된 항목 불러오기.
 function loadList(obj){
@@ -251,12 +265,17 @@ $(document).ready(()=>{
     loadAllList();
 
     // 맨위에 있는 항목 클릭
+    clickTop();
+})
+//#endregion
+
+function clickTop(){
+    // 맨위에 있는 항목 클릭
     let arrList = document.getElementsByClassName('saved');
     if(arrList.length != 0){
         $(arrList[0]).click();
     }
-})
-//#endregion
+}
 
 //#region 저장된 항목 전부 load
 function loadAllList(){
@@ -339,11 +358,6 @@ function save(id){
     localStorage.setItem(id,JSON.stringify(obj));
 }
 
-//#region 저장버튼 활성화, 비활성화
-function activeSaveBtn(){
-    $('.save-btn').removeClass('disabled');
-}
-
 function disabledSaveBtn(){
     $('.save-btn').addClass('disabled');
 }
@@ -358,3 +372,19 @@ function activeAddBtn(){
     $('.add-btn').removeClass('disabled');
 }
 //#endregion
+
+$('.trash-btn').on('click',()=>{
+    let id = $('.selected')[0].id;
+    let curRow = $("#"+id)[0];
+
+    if($('.saved').length == 1){
+        $('.right-write-content').remove();
+    }else{
+        let focusingTarget = curRow.nextElementSibling != null ? curRow.nextElementSibling : curRow.previousElementSibling;
+        $(focusingTarget).click();
+    }
+    
+    deleteList(id);
+    localStorage.removeItem(id);
+    activeAddBtn();
+})

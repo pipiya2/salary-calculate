@@ -22,6 +22,16 @@ input::-webkit-inner-spin-button {
     background-color: rgb(255, 255, 255);
 }
 
+.write-list-area.total > div{
+    width : 100%;
+    /* text-align: right; */
+    margin-right : 30px;
+}
+
+.total{
+    justify-content: right;
+}
+
 .left-wrapper{
     /* background-color: red; */
     width : 30%;
