@@ -1,3 +1,10 @@
 <script>
-  location.href = "./html/calculate_new.html";
+
+  function mobile() {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  }
+
+  let locationStr = mobile() ? "./html/m.calculate_new.html" : "./html/calculate_new.html";
+  
+  location.href = locationStr;
 </script>
