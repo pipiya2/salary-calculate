@@ -77,15 +77,15 @@ $(".add-btn").click((e)=>{
 })
 //#endregion
 
-$(document).on('click','.save-btn',(e)=>{
-    // 저장버튼이 비활성화가 아니면
-    if(!$('.save-btn').hasClass('disabled')){
-        save();
-    }
-    // let id = $(e.target)[0].id;
-    // listConfirm(id);
-    // save(id);
-})
+// $(document).on('click','.save-btn',(e)=>{
+//     // 저장버튼이 비활성화가 아니면
+//     if(!$('.save-btn').hasClass('disabled')){
+//         save();
+//     }
+//     // let id = $(e.target)[0].id;
+//     // listConfirm(id);
+//     // save(id);
+// })
 
 function addComma(val){
     val = val.toString();
@@ -105,16 +105,21 @@ function addComma(val){
 let total = 0;
 let showTotal = "";
 
-$(document).on('blur','.list-number',e=>{
-    let lists = $('.list-number');
-    for(let i = 0; i<lists.length - 1; i++){
-        let val = $(lists[i]).val();
+// $(document).on('blur','.list-number',e=>{
+//     let lists = $('.list-number');
+//     for(let i = 0; i<lists.length - 1; i++){
+//         let val = $(lists[i]).val();
 
-        val = Number(val.replaceAll(',', ''));
+//         val = Number(val.replaceAll(',', ''));
 
-        total += val;
-    }
-    showTotal = total.toLocaleString('ko-KR');
+//         total += val;
+//     }
+//     showTotal = total.toLocaleString('ko-KR');
+// })
+
+$(document).on('click','.back-btn',e=>{
+    $('.right-wrapper').css('display','none');
+    $('.left-wrapper').css('display','block');
 })
 
 $(document).on('keyup','.change-flag',(e)=>{
@@ -304,6 +309,10 @@ let prevId = -1;
 
 //#region 항목 클릭시
 $(document).on('click','.saved',e=>{
+    $('.left-wrapper').css('display','none');
+    $('.right-wrapper').css('display','block');
+    showRightSection(e.target.id);
+    return;
     let curId = e.target.id;
 
     // 이전에 클릭되어 있는 항목 있는지 체크
