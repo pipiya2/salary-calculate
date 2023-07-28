@@ -13,7 +13,7 @@ input::-webkit-inner-spin-button {
 
 /* pc */
 .wrapper{
-    height : 600px;
+    height : 550px;
     width : 95%;
     margin : 30px auto 0 auto;
     display : flex;
@@ -81,26 +81,35 @@ input{
     border : none;
 }
 
+input.edit {
+    width : 80%;
+    height : 100%;
+}
+
+/* .list.edit{
+    padding : 0px;
+} */
+
 .list-area > .list:first-child{
     border-top: 1px solid #dfdfdf;
 }
 
-.list.saved:hover{
+/* .list.saved:hover{
     cursor : pointer;
-    /* font-size: large;
-    opacity: 1; */
-}
+    font-size: large;
+    opacity: 1; 
+} */
 
 .add-btn{
     opacity: 0.8;
 }
 
-.add-btn:hover{
+/* .add-btn:hover{
     color : rgb(141, 243, 141);
     cursor : pointer;
     width : 20px;
     height :20px;
-}
+} */
 
 .add-btn.disabled{
     color : rgb(170, 165, 165);
@@ -130,10 +139,10 @@ input{
     color : black;
 }
 
-.trash-btn.active:hover{
+/* .trash-btn.active:hover{
     cursor : pointer;
     color : red;
-}
+} */
 
 .trash-btn-area{
     display : flex;
@@ -219,6 +228,14 @@ input:focus{
     text-align: center;
     display : flex;
     align-items: center;
+}
+
+.trash-btn-area > svg{
+    margin-right : 10px;
+}
+
+.trash-btn-area > svg:last-child{
+    margin-right : 0px;
 }
 
 .list.saved.selected{

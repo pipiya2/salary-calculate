@@ -104,6 +104,7 @@ function addComma(val){
 
 let total = 0;
 let showTotal = "";
+let currentId = "";
 
 // $(document).on('blur','.list-number',e=>{
 //     let lists = $('.list-number');
@@ -118,8 +119,14 @@ let showTotal = "";
 // })
 
 $(document).on('click','.back-btn',e=>{
+    if(localStorage.getItem(currentId) == null){
+        deleteList(currentId);
+        activeAddBtn();
+    }
+
     $('.right-wrapper').css('display','none');
     $('.left-wrapper').css('display','block');
+    currentId = "";
 })
 
 $(document).on('keyup','.change-flag',(e)=>{
@@ -153,7 +160,7 @@ function unComma(str) {
 //#region 저장,삭제
 function saveOrDel(){
     let writtenStr = "";
-    let id = $('.selected')[0].id;
+    let id = currentId;
 
     for(let i = 0 ; i< $('.change-flag').length; i++){
         writtenStr += $('.change-flag')[i].value + "";
@@ -201,6 +208,7 @@ function addList(){
     $(div).html('새로운 항목');
     $("#list-area").append(div);
     
+    $('#'+id).click();
     $('#'+id).click();
 }
 //#endregion
@@ -270,17 +278,17 @@ $(document).ready(()=>{
     loadAllList();
 
     // 맨위에 있는 항목 클릭
-    clickTop();
+    // clickTop();
 })
 //#endregion
 
-function clickTop(){
-    // 맨위에 있는 항목 클릭
-    let arrList = document.getElementsByClassName('saved');
-    if(arrList.length != 0){
-        $(arrList[0]).click();
-    }
-}
+// function clickTop(){
+//     // 맨위에 있는 항목 클릭
+//     let arrList = document.getElementsByClassName('saved');
+//     if(arrList.length != 0){
+//         $(arrList[0]).click();
+//     }
+// }
 
 //#region 저장된 항목 전부 load
 function loadAllList(){
@@ -309,9 +317,25 @@ let prevId = -1;
 
 //#region 항목 클릭시
 $(document).on('click','.saved',e=>{
-    $('.left-wrapper').css('display','none');
-    $('.right-wrapper').css('display','block');
-    showRightSection(e.target.id);
+
+    if($(e.target).hasClass('edit') || $(e.target).hasClass('editing')){
+        return;
+    }
+
+    if($(e.target).hasClass('selected')){
+        $('.saved').removeClass('selected');
+        $('.left-wrapper').css('display','none');
+        $('.right-wrapper').css('display','block');
+        currentId = e.target.id;
+        showRightSection(currentId);
+    }else{
+        $(e.target).addClass('selected');
+    }
+
+
+
+
+
     return;
     let curId = e.target.id;
 
@@ -385,7 +409,10 @@ function activeAddBtn(){
 //#endregion
 
 $('.trash-btn').on('click',()=>{
-    let id = $('.selected')[0].id;
+    let id = $('.selected')[0]?.id;
+
+    if(id == undefined) return;
+
     let curRow = $("#"+id)[0];
 
     if($('.saved').length == 1){
@@ -398,4 +425,31 @@ $('.trash-btn').on('click',()=>{
     deleteList(id);
     localStorage.removeItem(id);
     activeAddBtn();
+})
+
+
+$('.edit-btn').on('click',()=>{
+    let id = $('.selected')[0]?.id;
+
+    if(id == undefined) return;
+    
+    $('.saved').removeClass('selected');
+    let curRow = $("#"+id)[0];
+    curRow.innerHTML = "";
+
+    let input = document.createElement('input');
+    input.setAttribute('class','edit');
+    $(curRow).addClass('editing');
+    $(curRow).append(input);
+    $(input).focus();
+})
+
+
+$(document).on('blur','.edit',e =>{
+    let name = $('.edit').val();
+    
+    
+    if(name != ""){
+        save();
+    }
 })
