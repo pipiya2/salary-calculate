@@ -431,7 +431,7 @@ $('.trash-btn').on('click',()=>{
 $('.edit-btn').on('click',()=>{
     let id = $('.selected')[0]?.id;
 
-    if(id == undefined) return;
+    if(id == undefined || $('.selected').length > 1) return;
     
     $('.saved').removeClass('selected');
     let curRow = $("#"+id)[0];
@@ -439,17 +439,28 @@ $('.edit-btn').on('click',()=>{
 
     let input = document.createElement('input');
     input.setAttribute('class','edit');
+    input.setAttribute('data-tempId',id);
     $(curRow).addClass('editing');
     $(curRow).append(input);
     $(input).focus();
+
+    disabledAddBtn();
 })
 
 
 $(document).on('blur','.edit',e =>{
     let name = $('.edit').val();
-    
+    let id = $('.edit')[0].dataset.tempid;
     
     if(name != ""){
-        save();
+        let obj = JSON.parse(localStorage.getItem(id));
+        obj.name = name;
+        
+        localStorage.removeItem(id);
+        localStorage.setItem(id,JSON.stringify(obj));
+        $('.edit').remove();
+        $("#"+id).html(name);
+        activeAddBtn();
+        $('#'+id).removeClass('editing');
     }
 })
