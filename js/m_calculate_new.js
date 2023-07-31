@@ -69,16 +69,16 @@ let list = `
 let savedListFrame = `<div class = "list saved"></div>`;
 
 //#region 생성버튼 클릭 시
-$(".add-btn").click((e)=>{
-    let tagName = e.target.tagName;
-    let target = tagName == "path" ? $(e.target).parent() : e.target;
+// $(".add-btn").click((e)=>{
+//     let tagName = e.target.tagName;
+//     let target = tagName == "path" ? $(e.target).parent() : e.target;
 
-    // 클릭했을때 disabled 클래스가 없으면 addList 실행
-    if(!$(target).hasClass('disabled')){
-        disabledAddBtn(); // 추가버튼을 바로 비활성화 시켜줌.
-        addList();
-    }
-})
+//     // 클릭했을때 disabled 클래스가 없으면 addList 실행
+//     if(!$(target).hasClass('disabled')){
+//         disabledAddBtn(); // 추가버튼을 바로 비활성화 시켜줌.
+//         addList();
+//     }
+// })
 //#endregion
 
 // $(document).on('click','.save-btn',(e)=>{
@@ -121,18 +121,6 @@ let currentId = "";
 //     }
 //     showTotal = total.toLocaleString('ko-KR');
 // })
-
-$(document).on('click','.back-btn',e=>{
-    if(localStorage.getItem(currentId) == null){
-        deleteList(currentId);
-        activeAddBtn();
-    }
-
-    $('.right-wrapper').css('display','none');
-    $('.left-wrapper').css('display','block');
-    currentId = "";
-})
-
 $(document).on('keyup','.change-flag',(e)=>{
     // 현재 입력하고 있는 란이 금액 적는 란이면
     if($(e.target).hasClass('list-number') /*&& e.target.value != ""*/){
@@ -280,19 +268,8 @@ function hideRightSection(){
 //#region 화면 로드시
 $(document).ready(()=>{
     loadAllList();
-
-    // 맨위에 있는 항목 클릭
-    // clickTop();
 })
 //#endregion
-
-// function clickTop(){
-//     // 맨위에 있는 항목 클릭
-//     let arrList = document.getElementsByClassName('saved');
-//     if(arrList.length != 0){
-//         $(arrList[0]).click();
-//     }
-// }
 
 //#region 저장된 항목 전부 load
 function loadAllList(){
@@ -335,29 +312,6 @@ $(document).on('click','.saved',e=>{
     }else{
         $(e.target).addClass('selected');
     }
-
-
-
-
-
-    return;
-    let curId = e.target.id;
-
-    // 이전에 클릭되어 있는 항목 있는지 체크
-    if(prevId != -1 && prevId != curId){
-        if(localStorage.getItem(prevId) == undefined || localStorage.getItem(prevId) == null){
-            deleteList(prevId);
-            activeAddBtn();
-        }
-    }
-
-    if($(e.target).hasClass('selected')){
-        return;
-    }
-
-    focusNewList(e);
-    showRightSection(e.target.id);
-    prevId = curId;
 })
 //#endregion
 
@@ -412,46 +366,6 @@ function activeAddBtn(){
 }
 //#endregion
 
-$('.trash-btn').on('click',()=>{
-    let id = $('.selected')[0]?.id;
-
-    if(id == undefined) return;
-
-    let curRow = $("#"+id)[0];
-
-    if($('.saved').length == 1){
-        $('.right-write-content').remove();
-    }else{
-        let focusingTarget = curRow.nextElementSibling != null ? curRow.nextElementSibling : curRow.previousElementSibling;
-        $(focusingTarget).click();
-    }
-    
-    deleteList(id);
-    localStorage.removeItem(id);
-    activeAddBtn();
-})
-
-
-$('.edit-btn').on('click',()=>{
-    let id = $('.selected')[0]?.id;
-
-    if(id == undefined || $('.selected').length > 1) return;
-    
-    $('.saved').removeClass('selected');
-    let curRow = $("#"+id)[0];
-    curRow.innerHTML = "";
-
-    let input = document.createElement('input');
-    input.setAttribute('class','edit');
-    input.setAttribute('data-tempId',id);
-    $(curRow).addClass('editing');
-    $(curRow).append(input);
-    $(input).focus();
-
-    disabledAddBtn();
-})
-
-
 $(document).on('blur','.edit',e =>{
     let name = $('.edit').val();
     let id = $('.edit')[0].dataset.tempid;
@@ -466,5 +380,94 @@ $(document).on('blur','.edit',e =>{
         $("#"+id).html(name);
         activeAddBtn();
         $('#'+id).removeClass('editing');
+    }else{
+        $('.edit').remove();
+        $("#"+id).html(prevName);
+        activeAddBtn();
+        $('#'+id).removeClass('editing');
+        prevName = "";
     }
 })
+
+//#region 삭제 수정 추가 뒤로가기 버튼 클릭
+$(".button").click(e=>{
+    let tagName = e.target.tagName;
+    // let target = tagName == "path" ? $(e.target).parent() : e.target;
+    let target = tagName == "path" ? e.target.parentNode : e.target;
+    let buttonType = target.dataset.btntype;
+
+    switch(buttonType){
+        case "add" :  add(e); break;
+        case "trash" : trash(e); break;
+        case "edit" : edit(e); break;
+        case "back" : back(e); break;
+    }
+})
+
+let prevName =""
+
+function edit(e){
+    let id = $('.selected')[0]?.id;
+    
+    if(id == undefined || $('.selected').length > 1) return;
+    
+    if(localStorage.getItem(id) == null) return;
+
+    prevName = $('.selected')[0].innerHTML;
+    
+    $('.saved').removeClass('selected');
+    let curRow = $("#"+id)[0];
+    curRow.innerHTML = "";
+
+    let input = document.createElement('input');
+    input.setAttribute('class','edit');
+    input.setAttribute('data-tempId',id);
+    $(curRow).addClass('editing');
+    $(curRow).append(input);
+    $(input).focus();
+
+    disabledAddBtn();
+}
+
+function add(e){
+    let tagName = e.target.tagName;
+    let target = tagName == "path" ? $(e.target).parent() : e.target;
+
+    // 클릭했을때 disabled 클래스가 없으면 addList 실행
+    if(!$(target).hasClass('disabled')){
+        disabledAddBtn(); // 추가버튼을 바로 비활성화 시켜줌.
+        addList();
+    }
+}
+
+function trash(e){
+    let id = $('.selected')[0]?.id;
+
+    if(!id){
+        return;
+    }
+    let curRow = $("#"+id)[0];
+
+    if($('.saved').length == 1){
+        $('.right-write-content').remove();
+    }else{
+        let focusingTarget = curRow.nextElementSibling != null ? curRow.nextElementSibling : curRow.previousElementSibling;
+        $(focusingTarget).click();
+    }
+    
+    deleteList(id);
+    localStorage.removeItem(id);
+    activeAddBtn();
+}
+
+function back(e){
+    if(localStorage.getItem(currentId) == null){
+        deleteList(currentId);
+        activeAddBtn();
+    }
+
+    $('.right-wrapper').css('display','none');
+    $('.left-wrapper').css('display','block');
+    currentId = "";
+}
+//#endregion

@@ -4,6 +4,12 @@ const defaultKeyNum = 0;
 // 항목 생성중인지 확인하는 플래그 변수
 let isWritingNewList = false;
 
+let total = 0; // 금액
+let showTotal = "";
+
+let prevId = -1; // 항목 클릭하기 직전 아이디
+let prevName = "";
+
 //#region 우측 생성할 때
 let dafaultFrame = 
 `<div class = "right-write-content">
@@ -62,31 +68,6 @@ let list = `
 </div>`
 //#endregion
 
-let savedListFrame = `<div class = "list saved"></div>`;
-
-//#region 생성버튼 클릭 시
-$(".add-btn").click((e)=>{
-    let tagName = e.target.tagName;
-    let target = tagName == "path" ? $(e.target).parent() : e.target;
-
-    // 클릭했을때 disabled 클래스가 없으면 addList 실행
-    if(!$(target).hasClass('disabled')){
-        disabledAddBtn(); // 추가버튼을 바로 비활성화 시켜줌.
-        addList();
-    }
-})
-//#endregion
-
-$(document).on('click','.save-btn',(e)=>{
-    // 저장버튼이 비활성화가 아니면
-    if(!$('.save-btn').hasClass('disabled')){
-        save();
-    }
-    // let id = $(e.target)[0].id;
-    // listConfirm(id);
-    // save(id);
-})
-
 function addComma(val){
     val = val.toString();
     let returnData;
@@ -101,21 +82,18 @@ function addComma(val){
     return returnData;
 }
 
+// $(document).on('blur','.list-number',e=>{
+//     console.log("블러 넘버");
+//     let lists = $('.list-number');
+//     for(let i = 0; i<lists.length - 1; i++){
+//         let val = $(lists[i]).val();
 
-let total = 0;
-let showTotal = "";
+//         val = Number(val.replaceAll(',', ''));
 
-$(document).on('blur','.list-number',e=>{
-    let lists = $('.list-number');
-    for(let i = 0; i<lists.length - 1; i++){
-        let val = $(lists[i]).val();
-
-        val = Number(val.replaceAll(',', ''));
-
-        total += val;
-    }
-    showTotal = total.toLocaleString('ko-KR');
-})
+//         total += val;
+//     }
+//     showTotal = total.toLocaleString('ko-KR');
+// })
 
 $(document).on('keyup','.change-flag',(e)=>{
     // 현재 입력하고 있는 란이 금액 적는 란이면
@@ -300,7 +278,7 @@ function deleteList(id){
     $('#'+id).remove();
 }
 
-let prevId = -1;
+
 
 //#region 항목 클릭시
 $(document).on('click','.saved',e=>{
@@ -379,43 +357,6 @@ function activeAddBtn(){
 }
 //#endregion
 
-$('.trash-btn').on('click',()=>{
-    let id = $('.selected')[0].id;
-    let curRow = $("#"+id)[0];
-
-    if($('.saved').length == 1){
-        $('.right-write-content').remove();
-    }else{
-        let focusingTarget = curRow.nextElementSibling != null ? curRow.nextElementSibling : curRow.previousElementSibling;
-        $(focusingTarget).click();
-    }
-    
-    deleteList(id);
-    localStorage.removeItem(id);
-    activeAddBtn();
-})
-
-
-$('.edit-btn').on('click',()=>{
-    let id = $('.selected')[0]?.id;
-
-    if(id == undefined || $('.selected').length > 1) return;
-    
-    $('.saved').removeClass('selected');
-    let curRow = $("#"+id)[0];
-    curRow.innerHTML = "";
-
-    let input = document.createElement('input');
-    input.setAttribute('class','edit');
-    input.setAttribute('data-tempId',id);
-    $(curRow).addClass('editing');
-    $(curRow).append(input);
-    $(input).focus();
-
-    disabledAddBtn();
-})
-
-
 $(document).on('blur','.edit',e =>{
     let name = $('.edit').val();
     let id = $('.edit')[0].dataset.tempid;
@@ -430,5 +371,81 @@ $(document).on('blur','.edit',e =>{
         $("#"+id).html(name);
         activeAddBtn();
         $('#'+id).removeClass('editing');
+    }else{
+        $('.edit').remove();
+        $("#"+id).html(prevName);
+        activeAddBtn();
+        $('#'+id).removeClass('editing');
+        prevName = "";
     }
 })
+
+
+//#region 추가 , 삭제 , 변경버튼 클릭
+$(".button").click(e=>{
+    let tagName = e.target.tagName;
+    // let target = tagName == "path" ? $(e.target).parent() : e.target;
+    let target = tagName == "path" ? e.target.parentNode : e.target;
+    let buttonType = target.dataset.btntype;
+
+    switch(buttonType){
+        case "add" :  add(e); break;
+        case "trash" : trash(e); break;
+        case "edit" : edit(e); break;
+    }
+})
+
+function edit(e){
+    let id = $('.selected')[0]?.id;
+    
+    if(id == undefined || $('.selected').length > 1) return;
+    
+    if(localStorage.getItem(id) == null) return;
+
+    prevName = $('.selected')[0].innerHTML;
+    
+    $('.saved').removeClass('selected');
+    let curRow = $("#"+id)[0];
+    curRow.innerHTML = "";
+
+    let input = document.createElement('input');
+    input.setAttribute('class','edit');
+    input.setAttribute('data-tempId',id);
+    $(curRow).addClass('editing');
+    $(curRow).append(input);
+    $(input).focus();
+
+    disabledAddBtn();
+}
+
+function add(e){
+    let tagName = e.target.tagName;
+    let target = tagName == "path" ? $(e.target).parent() : e.target;
+
+    // 클릭했을때 disabled 클래스가 없으면 addList 실행
+    if(!$(target).hasClass('disabled')){
+        disabledAddBtn(); // 추가버튼을 바로 비활성화 시켜줌.
+        addList();
+    }
+}
+
+function trash(e){
+    let id = $('.selected')[0]?.id;
+
+    if(!id){
+        return;
+    }
+    let curRow = $("#"+id)[0];
+
+    if($('.saved').length == 1){
+        $('.right-write-content').remove();
+    }else{
+        let focusingTarget = curRow.nextElementSibling != null ? curRow.nextElementSibling : curRow.previousElementSibling;
+        $(focusingTarget).click();
+    }
+    
+    deleteList(id);
+    localStorage.removeItem(id);
+    activeAddBtn();
+}
+//#endregion
