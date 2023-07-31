@@ -118,6 +118,14 @@ input{
     cursor : default;
 }
 
+.trash-btn-area > svg{
+    margin-right : 10px;
+}
+
+.trash-btn-area > svg:last-child{
+    margin-right : 0px;
+}
+
 .add-btn.disabled:hover{
     cursor : default;
 }
@@ -192,6 +200,10 @@ input:focus{
     height : 80%;
     margin:0 auto;
     font-size: medium;
+}
+
+.edit-btn{
+    cursor: pointer;
 }
 
 .memo-area{

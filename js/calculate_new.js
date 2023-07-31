@@ -304,6 +304,10 @@ let prevId = -1;
 
 //#region 항목 클릭시
 $(document).on('click','.saved',e=>{
+    if($(e.target).hasClass('edit') || $(e.target).hasClass('editing')){
+        return;
+    }
+
     let curId = e.target.id;
 
     // 이전에 클릭되어 있는 항목 있는지 체크
@@ -389,4 +393,42 @@ $('.trash-btn').on('click',()=>{
     deleteList(id);
     localStorage.removeItem(id);
     activeAddBtn();
+})
+
+
+$('.edit-btn').on('click',()=>{
+    let id = $('.selected')[0]?.id;
+
+    if(id == undefined || $('.selected').length > 1) return;
+    
+    $('.saved').removeClass('selected');
+    let curRow = $("#"+id)[0];
+    curRow.innerHTML = "";
+
+    let input = document.createElement('input');
+    input.setAttribute('class','edit');
+    input.setAttribute('data-tempId',id);
+    $(curRow).addClass('editing');
+    $(curRow).append(input);
+    $(input).focus();
+
+    disabledAddBtn();
+})
+
+
+$(document).on('blur','.edit',e =>{
+    let name = $('.edit').val();
+    let id = $('.edit')[0].dataset.tempid;
+    
+    if(name != ""){
+        let obj = JSON.parse(localStorage.getItem(id));
+        obj.name = name;
+        
+        localStorage.removeItem(id);
+        localStorage.setItem(id,JSON.stringify(obj));
+        $('.edit').remove();
+        $("#"+id).html(name);
+        activeAddBtn();
+        $('#'+id).removeClass('editing');
+    }
 })

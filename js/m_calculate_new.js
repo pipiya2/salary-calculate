@@ -1,3 +1,7 @@
+let documentHeight = document.documentElement.clientHeight;
+
+$('.wrapper').css('height',documentHeight);
+
 // 첫번째 키 번호
 const defaultKeyNum = 0;
 
