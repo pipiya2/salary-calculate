@@ -302,7 +302,7 @@ $(document).on('click','.saved',e=>{
     if($(e.target).hasClass('edit') || $(e.target).hasClass('editing')){
         return;
     }
-
+    
     if($(e.target).hasClass('selected')){
         $('.saved').removeClass('selected');
         $('.left-wrapper').css('display','none');
@@ -310,6 +310,7 @@ $(document).on('click','.saved',e=>{
         currentId = e.target.id;
         showRightSection(currentId);
     }else{
+        $('.saved').removeClass('selected');
         $(e.target).addClass('selected');
     }
 })
