@@ -413,7 +413,8 @@ function edit(e){
     input.setAttribute('data-tempId',id);
     $(curRow).addClass('editing');
     $(curRow).append(input);
-    $(input).focus();
+    $(input).val(prevName);
+    $(input).select();
 
     disabledAddBtn();
 }
