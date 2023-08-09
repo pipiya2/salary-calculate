@@ -1,3 +1,11 @@
+function mobile() {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+}
+
+if(mobile()){
+    location.href = "../html/m_calculate_new.html";
+}
+
 // 첫번째 키 번호
 const defaultKeyNum = 0;
 

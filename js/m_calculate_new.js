@@ -1,3 +1,12 @@
+function mobile() {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+}
+
+if(!mobile()){
+    location.href = "../html/calculate_new.html";
+}
+
+
 let documentHeight = document.documentElement.clientHeight;
 
 $('.wrapper').css('height',documentHeight);
