@@ -2,8 +2,6 @@ function mobile() {
     return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 }
 
-alert(mobile());
-
 if(mobile()){
     location.href = "../html/m_calculate_new.html";
 }
