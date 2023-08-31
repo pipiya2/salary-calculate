@@ -458,13 +458,6 @@ function trash(e){
         return;
     }
     let curRow = $("#"+id)[0];
-
-    if($('.saved').length == 1){
-        $('.right-write-content').remove();
-    }else{
-        let focusingTarget = curRow.nextElementSibling != null ? curRow.nextElementSibling : curRow.previousElementSibling;
-        $(focusingTarget).click();
-    }
     
     deleteList(id);
     localStorage.removeItem(id);
