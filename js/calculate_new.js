@@ -368,24 +368,27 @@ function activeAddBtn(){
 $(document).on('blur','.edit',e =>{
     let name = $('.edit').val();
     let id = $('.edit')[0].dataset.tempid;
-    
-    if(name != ""){
-        let obj = JSON.parse(localStorage.getItem(id));
-        obj.name = name;
-        
-        localStorage.removeItem(id);
-        localStorage.setItem(id,JSON.stringify(obj));
-        $('.edit').remove();
-        $("#"+id).html(name);
-        activeAddBtn();
-        $('#'+id).removeClass('editing');
-    }else{
+
+    if(name == ""){
         $('.edit').remove();
         $("#"+id).html(prevName);
         activeAddBtn();
         $('#'+id).removeClass('editing');
         prevName = "";
+        return;
     }
+
+    let obj = JSON.parse(localStorage.getItem(id));
+    obj.name = name;
+    
+    localStorage.removeItem(id);
+    localStorage.setItem(id,JSON.stringify(obj));
+    $('.edit').remove();
+    $("#"+id).html(name);
+    activeAddBtn();
+    $('#'+id).removeClass('editing');
+
+    $("#"+id).addClass('selected');
 })
 
 
