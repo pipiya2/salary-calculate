@@ -5,6 +5,11 @@ function mobile() {
 if(mobile()){
     location.href = "../html/m_calculate_new.html";
 }
+let topMarginHeight = 50;
+let bottopMarginHeight = 50;
+let mainWrapHeight = $(document).height() - topMarginHeight - bottopMarginHeight;
+
+$('.wrapper').css('height',mainWrapHeight);
 
 // 첫번째 키 번호
 const defaultKeyNum = 0;

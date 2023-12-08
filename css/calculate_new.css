@@ -13,7 +13,7 @@ input::-webkit-inner-spin-button {
 
 /* pc */
 .wrapper{
-    height : 600px;
+    /* height : 600px; */
     width : 80%;
     margin : 50px auto 0 auto;
     display : flex;
