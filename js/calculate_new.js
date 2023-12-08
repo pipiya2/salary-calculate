@@ -143,10 +143,11 @@ function saveOrDel(){
     if(writtenStr == ""){
         disabledAddBtn();
         localStorage.removeItem(id);
-    }else{
-        activeAddBtn();
-        save(id);
+        return;
     }
+    
+    activeAddBtn();
+    save(id);
 }
 
 
