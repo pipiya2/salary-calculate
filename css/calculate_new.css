@@ -143,6 +143,11 @@ input{
     color : red;
 }
 
+.copy-btn.active:hover{
+    cursor : pointer;
+    color : red;
+}
+
 .trash-btn-area{
     display : flex;
     justify-content: right;

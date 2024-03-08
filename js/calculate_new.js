@@ -177,20 +177,36 @@ function listConfirm(id){
 }
 
 //#region 항목추가
-function addList(){
-    $('.saved').removeClass('selected'); // 클릭되어있는 항목을 블러처리함.
+function addList(copyId){
+    if(!copyId){
+        $('.saved').removeClass('selected'); // 클릭되어있는 항목을 블러처리함.
+    }
 
     let div = document.createElement('div');
     // input.setAttribute('type','text');
     div.setAttribute('class','list saved');
-    let id = getNextId(); // 새로운 아이디 채번
+    let id = getNextId();
+    
+    if(copyId != undefined && copyId != ""){
+        id = copyId;
+    }
+
     div.setAttribute('id',id);
-    $(div).html('새로운 항목');
+
+    let listName = copyId != undefined && copyId != "" ? "새로운항목 복사본" : "새로운항목";
+
+    $(div).html(listName);
     $("#list-area").append(div);
     
-    $('#'+id).click();
+    if(!(copyId != undefined && copyId != "")){
+        listClick(id);
+    }
 }
 //#endregion
+
+function listClick(id){
+    $('#'+id).click();
+}
 
 //#region 내역 금액 적는란 활성화
 function showRightSection(id){
@@ -409,8 +425,26 @@ $(".button").click(e=>{
         case "add" :  add(e); break;
         case "trash" : trash(e); break;
         case "edit" : edit(e); break;
+        case "copy" : copy(); break;
     }
 })
+
+// 기존항목 복사
+function copy(){
+    let newId = getNextId();
+
+    addList(newId);
+
+    let targetId = $('.selected')[0]?.id;
+
+    let targetInfo = JSON.parse(localStorage.getItem(targetId)); // 로컬 스트리지에는 데이터가 문자열로 되어있음.그래서 json으로 파싱
+
+    targetInfo.name = targetInfo.name + " 복사본";
+    
+    localStorage.setItem(newId,JSON.stringify(targetInfo)); // 로컬스트리지에 저장 할 땐 문자열로 저장해야함.
+
+    listClick(newId);
+}
 
 function edit(e){
     let id = $('.selected')[0]?.id;
