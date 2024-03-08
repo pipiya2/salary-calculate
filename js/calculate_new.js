@@ -177,8 +177,8 @@ function listConfirm(id){
 }
 
 //#region 항목추가
-function addList(copyId){
-    if(!copyId){
+function addList(copyObj){
+    if(!copyObj){
         $('.saved').removeClass('selected'); // 클릭되어있는 항목을 블러처리함.
     }
 
@@ -187,18 +187,18 @@ function addList(copyId){
     div.setAttribute('class','list saved');
     let id = getNextId();
     
-    if(copyId != undefined && copyId != ""){
-        id = copyId;
+    if(copyObj != undefined){
+        id = copyObj.id;
     }
 
     div.setAttribute('id',id);
 
-    let listName = copyId != undefined && copyId != "" ? "새로운항목 복사본" : "새로운항목";
+    let listName = copyObj != undefined  ? copyObj.newName : "새로운항목";
 
     $(div).html(listName);
     $("#list-area").append(div);
     
-    if(!(copyId != undefined && copyId != "")){
+    if(!(copyObj != undefined)){
         listClick(id);
     }
 }
@@ -433,13 +433,18 @@ $(".button").click(e=>{
 function copy(){
     let newId = getNextId();
 
-    addList(newId);
-
     let targetId = $('.selected')[0]?.id;
 
     let targetInfo = JSON.parse(localStorage.getItem(targetId)); // 로컬 스트리지에는 데이터가 문자열로 되어있음.그래서 json으로 파싱
 
     targetInfo.name = targetInfo.name + " 복사본";
+
+    let copyObj = {
+        id : newId,
+        newName : targetInfo.name
+    }
+    
+    addList(copyObj);
     
     localStorage.setItem(newId,JSON.stringify(targetInfo)); // 로컬스트리지에 저장 할 땐 문자열로 저장해야함.
 
