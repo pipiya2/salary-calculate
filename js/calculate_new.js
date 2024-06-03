@@ -288,6 +288,7 @@ function clickTop(){
 //#region 저장된 항목 전부 load
 function loadAllList(){
     let keys = Object.keys(localStorage);
+    keys = keys.sort();
     keys.forEach(e=>{
         if(!(e.length > 3)){
             let obj = JSON.parse(localStorage.getItem(e));
