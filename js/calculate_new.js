@@ -108,6 +108,16 @@ function addComma(val){
 //     showTotal = total.toLocaleString('ko-KR');
 // })
 
+$(document).on('keyup',e=>{
+    let focusingTagName = document.activeElement.tagName;
+    let keyName = e.key;
+
+    if(keyName == "F2" && focusingTagName == "BODY"){
+        edit();
+    }
+
+})
+
 $(document).on('keyup','.change-flag',(e)=>{
     // 현재 입력하고 있는 란이 금액 적는 란이면
     if($(e.target).hasClass('list-number') /*&& e.target.value != ""*/){
