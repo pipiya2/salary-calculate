@@ -9,6 +9,9 @@ let topMarginHeight = 50;
 let bottopMarginHeight = 50;
 let mainWrapHeight = $(document).height() - topMarginHeight - bottopMarginHeight;
 
+// 전역변수
+let lastFocus = "";
+
 $('.wrapper').css('height',mainWrapHeight);
 
 // 첫번째 키 번호
@@ -81,6 +84,9 @@ let list = `
 </div>`
 //#endregion
 
+
+
+
 function addComma(val){
     val = val.toString();
     let returnData;
@@ -112,10 +118,29 @@ $(document).on('keyup',e=>{
     let focusingTagName = document.activeElement.tagName;
     let keyName = e.key;
 
+    // 수정
     if(keyName == "F2" && focusingTagName == "BODY"){
         edit();
     }
 
+    if(lastFocus != "text" && (keyName == "ArrowUp" || keyName == "ArrowDown")){
+        if($(".selected")){
+            let id = $(".selected")[0].id;
+            let keys = Object.keys(localStorage);
+            keys = keys.sort((a,b)=>a-b);
+
+            let index = keys.indexOf(id);
+
+            if(index < 0 || index > keys.length -1){
+                return;
+            }
+
+            switch(keyName){
+                case "ArrowUp" : listClick(keys[index-1]);break;
+                case "ArrowDown" : listClick(keys[index+1]);break;
+            }
+        }
+    }
 })
 
 $(document).on('keyup','.change-flag',(e)=>{
@@ -319,7 +344,9 @@ function deleteList(id){
     $('#'+id).remove();
 }
 
-
+$(document).on('click','body',e=>{
+    lastFocus = e.target.type;
+})
 
 //#region 항목 클릭시
 $(document).on('click','.saved',e=>{
