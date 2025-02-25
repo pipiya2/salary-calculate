@@ -5,14 +5,18 @@ function mobile() {
 if(mobile()){
     location.href = "../html/m_calculate_new.html";
 }
+
+
+//#region 높이 조정 
 let topMarginHeight = 50;
 let bottopMarginHeight = 50;
 let mainWrapHeight = $(document).height() - topMarginHeight - bottopMarginHeight;
+$('.wrapper').css('height',mainWrapHeight);
+//#endregion
 
 // 전역변수
 let lastFocus = "";
 
-$('.wrapper').css('height',mainWrapHeight);
 
 // 첫번째 키 번호
 const defaultKeyNum = 0;
@@ -85,8 +89,6 @@ let list = `
 //#endregion
 
 
-
-
 function addComma(val){
     val = val.toString();
     let returnData;
@@ -136,8 +138,8 @@ $(document).on('keyup',e=>{
             }
 
             switch(keyName){
-                case "ArrowUp" : listClick(keys[index-1]);break;
-                case "ArrowDown" : listClick(keys[index+1]);break;
+                case "ArrowUp" : listClick(keys[index+1]);break;
+                case "ArrowDown" : listClick(keys[index-1]);break;
             }
         }
     }
