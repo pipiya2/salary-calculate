@@ -233,7 +233,7 @@ function addList(copyObj){
     let listName = copyObj != undefined  ? copyObj.newName : "새로운항목";
 
     $(div).html(listName);
-    $("#list-area").append(div);
+    $("#list-area").prepend(div);
     
     if(!(copyObj != undefined)){
         listClick(id);
