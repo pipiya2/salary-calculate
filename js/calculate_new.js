@@ -454,6 +454,16 @@ $(document).on('blur','.edit',e =>{
 })
 
 
+// 수정 중
+$(document).on("keyup",".edit",e=>{
+    let keyName = e.key;
+    
+    if(keyName == "Enter"){
+        $(".edit").blur();
+    }
+})
+
+
 //#region 추가 , 삭제 , 변경버튼 클릭
 $(".button").click(e=>{
     let tagName = e.target.tagName;
